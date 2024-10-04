@@ -1,0 +1,20 @@
+@SmartMEDChallege_HostAddress = http://localhost:5075
+
+// To delete a medication
+@medicationID = e5538ed4-b98f-4742-9fec-3c56bd75037d
+
+### Get all medications
+GET {{SmartMEDChallege_HostAddress}}/api/Medications
+Accept: application/json
+
+### Create a new medication
+POST {{SmartMEDChallege_HostAddress}}/api/Medications
+Content-Type: application/json
+
+{
+  "name": "Aspirin",
+  "quantity": 100
+}
+
+### Delete a medication
+DELETE {{SmartMEDChallege_HostAddress}}/api/Medications/{{medicationID}}

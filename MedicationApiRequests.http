@@ -1,0 +1,15 @@
+### Get all medications
+GET https://localhost:7199/api/Medications
+Accept: application/json
+
+### Create a new medication
+POST https://localhost:7199/api/Medications
+Content-Type: application/json
+
+{
+  "name": "Aspirin",
+  "quantity": 100
+}
+
+### Delete a medication
+DELETE https://localhost:7199/api/Medications/1

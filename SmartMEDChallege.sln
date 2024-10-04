@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35208.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMEDChallege", "SmartMEDChallege\SmartMEDChallege.csproj", "{BD1D5B93-2003-45B8-8985-FF2359EE281E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartMEDChallegeTests", "SmartMEDChallegeTests\SmartMEDChallegeTests.csproj", "{CDD4A8CD-7B0E-45E4-B8E9-DB3AAEB47020}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD1D5B93-2003-45B8-8985-FF2359EE281E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD1D5B93-2003-45B8-8985-FF2359EE281E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD1D5B93-2003-45B8-8985-FF2359EE281E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD1D5B93-2003-45B8-8985-FF2359EE281E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDD4A8CD-7B0E-45E4-B8E9-DB3AAEB47020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDD4A8CD-7B0E-45E4-B8E9-DB3AAEB47020}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDD4A8CD-7B0E-45E4-B8E9-DB3AAEB47020}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDD4A8CD-7B0E-45E4-B8E9-DB3AAEB47020}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0F974BF-A7C7-4BDA-9B70-9CFCC91F8173}
+	EndGlobalSection
+EndGlobal
