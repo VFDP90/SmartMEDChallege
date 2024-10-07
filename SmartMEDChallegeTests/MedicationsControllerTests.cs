@@ -9,37 +9,52 @@ namespace SmartMEDChallegeTests
 {
 	public class MedicationsControllerTests
 	{
+
 		[Fact]
 		public async Task GetMedications_ReturnsAllMedications()
 		{
 			// Arrange
 			var options = new DbContextOptionsBuilder<MedicationDbContext>()
-				.UseInMemoryDatabase(databaseName: "TestMedicationDb")
+				.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
 				.Options;
 
-			// Seed the database
-			using (var context = new MedicationDbContext(options))
+			// Act & Assert
+			try
 			{
-				context.Medications.Add(new Medication { Name = "Aspirin", Quantity = 100, CreationDate = DateTime.UtcNow });
-				context.Medications.Add(new Medication { Name = "Ibuprofen", Quantity = 50, CreationDate = DateTime.UtcNow });
-				context.SaveChanges();
-			}
+				// Save values to the database
+				using (var context = new MedicationDbContext(options))
+				{
+					context.Medications.AddRange(
+						new Medication { Name = "Aspirin", Quantity = 100, CreationDate = DateTime.UtcNow },
+						new Medication { Name = "Ibuprofen", Quantity = 50, CreationDate = DateTime.UtcNow }
+					);
+					await context.SaveChangesAsync();
+				}
 
-			// Act
-			IEnumerable<Medication> medications;
-			using (var context = new MedicationDbContext(options))
+				// Perform the test
+				using (var context = new MedicationDbContext(options))
+				{
+					var controller = new MedicationsController(context);
+					var result = await controller.GetMedications();
+
+					// Assert
+					var okResult = result.Result as OkObjectResult; // Cast to OkObjectResult
+					Assert.NotNull(okResult); // Make sure the result is OkObjectResult
+					Assert.Equal(200, okResult.StatusCode); // Ensure it's a 200 OK
+
+					var medications = okResult.Value as IEnumerable<Medication>; // Cast Value to the expected type
+					Assert.NotNull(medications); // Ensure it's not null
+					Assert.Equal(2, medications.Count()); // Check if it has two items
+				}
+			}
+			finally
 			{
-				var controller = new MedicationsController(context);
-				var result = await controller.GetMedications();
-
-				// Assert
-				Assert.NotNull(result.Value); // Assert that the result is not null
-				medications = result.Value;
-
+				// Cleanup: Remove the in-memory database
+				using (var context = new MedicationDbContext(options))
+				{
+					await context.Database.EnsureDeletedAsync();
+				}
 			}
-
-			// Final assertion outside the using statement for clarity
-			Assert.Equal(2, medications.Count());
 		}
 	}
 }
