@@ -1,6 +1,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using SmartMEDChallege.Controllers;
 using SmartMEDChallege.Data;
 using SmartMEDChallege.Models;
@@ -18,6 +20,10 @@ namespace SmartMEDChallegeTests
 				.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
 				.Options;
 
+			// No need to get the logs (NullLogger)
+			ILogger<MedicationsController> logger = new NullLogger<MedicationsController>();
+
+
 			// Act & Assert
 			try
 			{
@@ -34,7 +40,7 @@ namespace SmartMEDChallegeTests
 				// Perform the test
 				using (var context = new MedicationDbContext(options))
 				{
-					var controller = new MedicationsController(context);
+					var controller = new MedicationsController(context, logger);
 					var result = await controller.GetMedications();
 
 					// Assert
