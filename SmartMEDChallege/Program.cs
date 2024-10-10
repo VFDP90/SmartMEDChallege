@@ -1,11 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using SmartMEDChallege.Data;
+using SmartMEDChallege.Interfaces;
+using SmartMEDChallege.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IMedicationService, MedicationService>();
 
 //Use in memory DB
 builder.Services.AddDbContext<MedicationDbContext>(options =>

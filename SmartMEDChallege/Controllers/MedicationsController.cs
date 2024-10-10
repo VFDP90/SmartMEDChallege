@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SmartMEDChallege.Data;
 using SmartMEDChallege.DTOs;
+using SmartMEDChallege.Interfaces;
 using SmartMEDChallege.Models;
 
 namespace SmartMEDChallege.Controllers
@@ -11,12 +12,12 @@ namespace SmartMEDChallege.Controllers
 	[ApiController]
 	public class MedicationsController : ControllerBase
 	{
-		private readonly MedicationDbContext _context;
+		private readonly IMedicationService _medicationService;
 		private readonly ILogger<MedicationsController> _logger;
 
-		public MedicationsController(MedicationDbContext context, ILogger<MedicationsController> logger)
+		public MedicationsController(IMedicationService medicationService, ILogger<MedicationsController> logger)
 		{
-			_context = context;
+			_medicationService = medicationService;
 			_logger = logger;
 		}
 
@@ -26,7 +27,7 @@ namespace SmartMEDChallege.Controllers
 		{
 			try
 			{
-				var medications = await _context.Medications.ToListAsync();
+				var medications = await _medicationService.GetAllMedicationsAsync();
 				return Ok(medications); // Return 200 OK with the list of medications
 			}
 			catch (Exception ex)
@@ -46,17 +47,7 @@ namespace SmartMEDChallege.Controllers
 			}
 			try
 			{
-				// Map the DTO to the Medication entity
-				var medication = new Medication
-				{
-					Id = Guid.NewGuid(),
-					Name = createMedicationDto.Name,
-					Quantity = createMedicationDto.Quantity,
-					CreationDate = DateTime.UtcNow
-				};
-
-				_context.Medications.Add(medication);
-				await _context.SaveChangesAsync();
+				var medication = await _medicationService.CreateMedicationAsync(createMedicationDto);
 
 				// Return 201 Created with the location of the created resource
 				return CreatedAtAction(nameof(GetMedications), new { id = medication.Id }, medication);
@@ -74,15 +65,12 @@ namespace SmartMEDChallege.Controllers
 		{
 			try
 			{
-				var medication = await _context.Medications.FindAsync(id);
+				var result = await _medicationService.DeleteMedicationAsync(id);
 
-				if (medication == null)
+				if (!result)
 				{
 					return NotFound(); // Return 404 if the medication is not found
 				}
-
-				_context.Medications.Remove(medication);
-				await _context.SaveChangesAsync();
 
 				return NoContent(); // Return 204 No Content on successful deletion
 			}

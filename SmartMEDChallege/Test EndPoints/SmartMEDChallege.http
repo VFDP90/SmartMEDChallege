@@ -1,7 +1,7 @@
 @SmartMEDChallege_HostAddress = http://localhost:5075
 
 // To delete a medication
-@medicationID = e5538ed4-b98f-4742-9fec-3c56bd75037d
+@medicationID = 58c69b86-6b43-4ca9-9a92-64ed3e088ad9
 
 ### Get all medications
 GET {{SmartMEDChallege_HostAddress}}/api/Medications
