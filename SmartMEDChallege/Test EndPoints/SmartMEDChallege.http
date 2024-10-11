@@ -18,3 +18,4 @@ Content-Type: application/json
 
 ### Delete a medication
 DELETE {{SmartMEDChallege_HostAddress}}/api/Medications/{{medicationID}}
+

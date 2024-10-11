@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -49,8 +50,14 @@ namespace SmartMEDChallege.Controllers
 			{
 				var medication = await _medicationService.CreateMedicationAsync(createMedicationDto);
 
-				// Return 201 Created with the location of the created resource
-				return CreatedAtAction(nameof(GetMedications), new { id = medication.Id }, medication);
+				// Need to implement get medication by ID to use the Created response
+				//Construct the URL manually
+				//var locationUrl = $"/api/Medications/{medication.Id}";
+
+				// Return 201 Created
+				//return Created(locationUrl,medication);
+
+				return Ok(medication);
 			}
 			catch (Exception ex)
 			{
